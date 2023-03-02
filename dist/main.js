@@ -1,14 +1,27 @@
-const recipes = [];
-
 function getRecipe() {
   let ingredient = $("#ingredient").val();
-  $.get(`/recipes/${ingredient}`).then((loadedData) => {
-    let data = dataFilter(loadedData);
-    render(data);
 
-    // let sensetive = $('input[name="interest"]:checked').serialize();
-    // console.log(sensetive.substring(9));
-  });
+  if ($("#dairy").prop("checked")) {
+    $.get(`/dairy/${ingredient}`).then((loadedData) => {
+      let data = dataFilter(loadedData);
+      render(data);
+    });
+  } else if ($("#gluten").prop("checked")) {
+    $.get(`/gluten/${ingredient}`).then((loadedData) => {
+      let data = dataFilter(loadedData);
+      render(data);
+    });
+  } else if ($("#gluten").prop("checked") && $("#dairy").prop("checked")) {
+    $.get(`/DiaryAndGluten/${ingredient}`).then((loadedData) => {
+      let data = dataFilter(loadedData);
+      render(data);
+    });
+  } else {
+    $.get(`/recipes/${ingredient}`).then((loadedData) => {
+      let data = dataFilter(loadedData);
+      render(data);
+    });
+  }
 }
 
 $("#resipes").on("click", ".picture", function () {
@@ -20,7 +33,7 @@ $("#resipes").on("click", ".picture", function () {
 
 function dataFilter(loadedData) {
   let appendRecipe = [];
-  let allRecipes = loadedData.results;
+  let allRecipes = loadedData;
   for (let recipe of allRecipes) {
     let singleRecipe = {};
     singleRecipe.idMeal = recipe.idMeal;
@@ -29,7 +42,6 @@ function dataFilter(loadedData) {
     singleRecipe.thumbnail = recipe.thumbnail;
     singleRecipe.href = recipe.href;
     appendRecipe.push(singleRecipe);
-    recipes.push(singleRecipe);
   }
   return appendRecipe;
 }

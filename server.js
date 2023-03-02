@@ -32,7 +32,7 @@ app.get("/recipes/:ingredient", (req, res) => {
       `https://recipes-goodness-elevation.herokuapp.com/recipes/ingredient/${ingredient}`
     )
     .then((result) => {
-      res.send(result.data);
+      res.send(result.data.results);
     });
   res.status(200);
 });
