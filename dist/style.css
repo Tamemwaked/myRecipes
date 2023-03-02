@@ -1,0 +1,20 @@
+.picture {
+  width: 150px;
+  height: 150px;
+}
+body {
+  background-color: lightgrey;
+}
+
+#resipes {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+#box {
+  background-color: goldenrod;
+  width: 300px;
+  box-shadow: 15px 5px 30px gold;
+  padding: 50px;
+  margin: 40px;
+}
