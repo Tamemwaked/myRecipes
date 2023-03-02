@@ -1,34 +1,38 @@
 function getRecipe() {
   let ingredient = $("#ingredient").val();
 
-  if ($("#dairy").prop("checked")) {
+  if ($("#dairy").prop("checked") && !$("#gluten").prop("checked")) {
     $.get(`/dairy/${ingredient}`).then((loadedData) => {
       let data = dataFilter(loadedData);
       render(data);
+      console.log("diary server");
     });
-  } else if ($("#gluten").prop("checked")) {
+  } else if ($("#gluten").prop("checked") && !$("#dairy").prop("checked")) {
     $.get(`/gluten/${ingredient}`).then((loadedData) => {
       let data = dataFilter(loadedData);
       render(data);
+      console.log("glutin server");
     });
   } else if ($("#gluten").prop("checked") && $("#dairy").prop("checked")) {
     $.get(`/DiaryAndGluten/${ingredient}`).then((loadedData) => {
       let data = dataFilter(loadedData);
       render(data);
+      console.log("glutin and diary server");
     });
   } else {
     $.get(`/recipes/${ingredient}`).then((loadedData) => {
       let data = dataFilter(loadedData);
       render(data);
+      console.log("recipes server");
     });
   }
 }
 
 $("#resipes").on("click", ".picture", function () {
   let imgId = $(this).data().id;
-  let index = recipes.findIndex((recipe) => recipe.idMeal == imgId);
-  let ingredient = recipes[index].ingredients[0];
-  alert(ingredient);
+  $.get(`/singleRecipe/${imgId}`).then((firstIngredient) => {
+    alert(firstIngredient);
+  });
 });
 
 function dataFilter(loadedData) {
