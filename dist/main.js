@@ -1,6 +1,5 @@
 function getRecipe() {
   let ingredient = $("#ingredient").val();
-
   if ($("#dairy").prop("checked") && !$("#gluten").prop("checked")) {
     $.get(`/dairy/${ingredient}`).then((loadedData) => {
       let data = dataFilter(loadedData);

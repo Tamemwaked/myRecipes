@@ -100,9 +100,13 @@ router.get("/singleRecipe/:idMeal", (req, res) => {
   res.status(200);
 });
 
-function recipesWithSensitive(recipes, Sensitives) {
+function recipesWithSensitive(recipes, sensitives) {
   let singleRecipe = {};
   let recipesWithOutSensitive = [];
+  let lowerCaseSensitive = [];
+  sensitives.forEach((sensitive) => {
+    lowerCaseSensitive.push(sensitive.toLowerCase());
+  });
 
   for (let i = 0; i < recipes.length; i++) {
     singleRecipe = {};
@@ -110,7 +114,7 @@ function recipesWithSensitive(recipes, Sensitives) {
       let splitedIngredients = recipes[i].ingredients[j].split(" ");
 
       splitedIngredients.forEach((ingredient) => {
-        if (Sensitives.includes(ingredient)) {
+        if (lowerCaseSensitive.includes(ingredient.toLowerCase())) {
           singleRecipe = recipes[i];
         }
       });
