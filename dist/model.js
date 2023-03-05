@@ -12,12 +12,35 @@ function dataFilter(loadedData) {
   }
   return appendRecipe;
 }
-
+let saveIndex = 0;
 function getRecipeData(ingredient) {
   $.get(`/recipes/${ingredient}`).then((loadedData) => {
     let data = dataFilter(loadedData);
-    render(data);
+    appendArray = [];
+    const ammount = 4;
+
+    for (let i = saveIndex; i < saveIndex + ammount; i++) {
+      appendArray.push(data[i]);
+    }
+    saveIndex += ammount;
+    const returnArray = appendArray;
+    appendArray = [];
+
+    if (saveIndex >= data.length) {
+      console.log("no more");
+      saveIndex = 0;
+      return;
+    }
+
+    render(returnArray);
   });
+}
+
+function pagination(ingredient) {
+  // $.get(`/pagenation/${ingredient}`).then((loadedData) => {
+  //   let data = dataFilter(loadedData);
+  //   render(data);
+  // });
 }
 
 function getDairyRecipeData(ingredient) {

@@ -100,6 +100,27 @@ router.get("/singleRecipe/:idMeal", (req, res) => {
   res.status(200);
 });
 
+router.get("/pagenation/:ingredient", (req, res) => {
+  const ingredient = req.params.ingredient;
+  let offset = req.query.offset;
+  let limit = 4;
+  console.log("entered");
+
+  axios
+    .get(
+      `https://recipes-goodness-elevation.herokuapp.com/recipes/ingredient/${ingredient}`
+    )
+    .then((result) => {
+      recipes = result.data.results;
+      intLimit = parseInt(offset) + parseInt(limit);
+      let offsetRecipes = recipes.slice(offset, intLimit);
+
+      res.send(offsetRecipes);
+    });
+
+  res.status(200);
+});
+
 function recipesWithSensitive(recipes, sensitives) {
   let singleRecipe = {};
   let recipesWithOutSensitive = [];

@@ -9,6 +9,7 @@ function getRecipe() {
     getDairyAndGlutenRecipeData(ingredient);
   } else {
     getRecipeData(ingredient);
+    pagination(ingredient);
   }
 }
 
